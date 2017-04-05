@@ -5,6 +5,7 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -14,14 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.mkotlinski.online.store.model.User;
+import pl.mkotlinski.online.store.service.UserService;
+
 @Controller
 public class MainController {
+	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value = "/")
 	public ModelAndView defaultPage()
 	{
 		ModelAndView mnv = new ModelAndView();
 		mnv.setViewName("index");		
+		
+		testHibernate();
 		
 		return mnv;
 	}
@@ -73,4 +82,16 @@ public class MainController {
 	}
 	
 	//ERROR PAGE [END]
+
+	//private methods[BEGIN]
+	
+	private void testHibernate()
+	{
+		User user = new User();
+		user.setUserName("MichalK");
+		user.setPassword("test");
+		userService.addUser(user);
+	}
+	
+	//private methods[END]
 }
