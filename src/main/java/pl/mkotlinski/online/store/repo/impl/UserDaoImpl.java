@@ -1,21 +1,23 @@
 package pl.mkotlinski.online.store.repo.impl;
 
-import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.persistence.Query;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import pl.mkotlinski.online.store.model.UserAccount;
+import pl.mkotlinski.online.store.model.user.UserAccount;
+import pl.mkotlinski.online.store.model.user.UserRoleTypeEnum;
 import pl.mkotlinski.online.store.repo.UserDao;
 import pl.mkotlinski.online.store.repo.abstractDao.AbstractDao;
 
 @Repository("userDaoRepo")
-public class UserDaoImpl extends AbstractDao<Integer, UserAccount> implements UserDao {
+public class UserDaoImpl extends AbstractDao<Long, UserAccount> implements UserDao{
 
 	@Override
-	public UserAccount findUserById(int id_user) {
+	public UserAccount findUserById(long id_user) {
 		return getByPrimaryKey(id_user);
 	}
 
@@ -31,5 +33,4 @@ public class UserDaoImpl extends AbstractDao<Integer, UserAccount> implements Us
 		UserAccount user = (UserAccount) criteria.uniqueResult();
 		return user;
 	}
-
 }

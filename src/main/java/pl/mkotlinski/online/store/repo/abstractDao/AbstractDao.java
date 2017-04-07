@@ -6,6 +6,9 @@ import java.lang.reflect.ParameterizedType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.transaction.annotation.Transactional;
+
+@Transactional
 public abstract class AbstractDao<PRIMARYKEY extends Serializable, T>
 {
 	private final Class<T> persistentClass;
