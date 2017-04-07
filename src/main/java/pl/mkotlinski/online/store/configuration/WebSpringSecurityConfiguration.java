@@ -11,29 +11,63 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-public class WebSpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSpringSecurityConfiguration extends WebSecurityConfigurerAdapter
+{
 
 	@Autowired
 	@Qualifier("customUserdetailsService")
 	private UserDetailsService userDetailsService;
-	
+
+/*	@Autowired
+	PersistentTokenRepository tokenRepository;
+*/
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		// Users in memory.
-		auth.inMemoryAuthentication().withUser("user1").password("12345").roles("USER");
-		auth.inMemoryAuthentication().withUser("admin1").password("12345").roles("USER, ADMIN");
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
+	{
+		auth.userDetailsService(userDetailsService);
+	//	auth.authenticationProvider(getAuthenticationProvider());
 	}
 
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		 http.authorizeRequests()
-	        .antMatchers("/*").permitAll()
-	        .and().formLogin().loginPage("/login")
-	        //TODO: do usuniecia
-	        .defaultSuccessUrl("/userInfo")
-	        .usernameParameter("ssoId").passwordParameter("password")
-	        .and().csrf().disable()
-	        .exceptionHandling().accessDeniedPage("/Access_Denied");
+	protected void configure(HttpSecurity http) throws Exception
+	{
+		http.authorizeRequests()
+        .antMatchers("/*").permitAll()
+        .and().formLogin().loginPage("/login")
+        //TODO: do usuniecia
+        .defaultSuccessUrl("/userInfo")
+        .usernameParameter("ssoId").passwordParameter("password")
+        .and().csrf().disable()
+        .exceptionHandling().accessDeniedPage("/Access_Denied");
 	}
+	/*
+	@Bean
+	public DaoAuthenticationProvider getAuthenticationProvider()
+	{
+		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+		authenticationProvider.setUserDetailsService(userDetailsService);
+		authenticationProvider.setPasswordEncoder(getPasswordEncoder());
+		return authenticationProvider;
+	}
+
+	@Bean
+	public PasswordEncoder getPasswordEncoder()
+	{
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public AuthenticationTrustResolver getAuthenticationResolver()
+	{
+		return new AuthenticationTrustResolverImpl();
+	}
+
+	@Bean
+	public PersistentTokenBasedRememberMeServices getPersistentTokenBasedRememberMeServices()
+	{
+		PersistentTokenBasedRememberMeServices tokenBasedservice = new PersistentTokenBasedRememberMeServices(
+				"remember-me", userDetailsService, tokenRepository);
+		return tokenBasedservice;
+	}*/
 
 }

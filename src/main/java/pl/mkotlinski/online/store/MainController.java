@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import pl.mkotlinski.online.store.model.User;
+import pl.mkotlinski.online.store.model.UserAccount;
 import pl.mkotlinski.online.store.service.UserService;
 
 @Controller
@@ -29,8 +29,6 @@ public class MainController {
 	{
 		ModelAndView mnv = new ModelAndView();
 		mnv.setViewName("index");		
-		
-		testHibernate();
 		
 		return mnv;
 	}
@@ -64,11 +62,8 @@ public class MainController {
 	        new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }
 	    return "redirect:/login?logout";
-	}
-	
-	//LOGIN && Logout [END]
-	
-	
+	}	
+	//LOGIN && Logout [END]	
 	
 	//ERROR PAGE [START]
 	
@@ -85,13 +80,6 @@ public class MainController {
 
 	//private methods[BEGIN]
 	
-	private void testHibernate()
-	{
-		User user = new User();
-		user.setUserName("MichalK");
-		user.setPassword("test");
-		userService.addUser(user);
-	}
 	
 	//private methods[END]
 }

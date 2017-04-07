@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.mkotlinski.online.store.model.User;
+import pl.mkotlinski.online.store.model.UserAccount;
 import pl.mkotlinski.online.store.repo.UserDao;
 import pl.mkotlinski.online.store.service.UserService;
 
@@ -19,13 +19,26 @@ public class UserServiceImpl implements UserService{
 	private UserDao userDao;
 	
 	@Override
-	public User getUserById(int id_user) {
-		return userDao.getUserById(id_user);
+	public UserAccount findUserById(int id_user) {
+		return userDao.findUserById(id_user);
 	}
 
 	@Override
-	public void addUser(User user)
+	public void addUser(UserAccount user) throws Exception
 	{
+		UserAccount userAccount = findByLogin(user.getLogin());
+		
+		if(userAccount != null)
+			throw new Exception();
+		
 		userDao.addUser(user);
-	}	
+	}
+
+	@Override
+	public UserAccount findByLogin(String login)
+	{
+		return userDao.findByLogin(login);
+	}
+	
+	
 }
