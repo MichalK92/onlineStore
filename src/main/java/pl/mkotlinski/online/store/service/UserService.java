@@ -1,10 +1,12 @@
 package pl.mkotlinski.online.store.service;
 
-import pl.mkotlinski.online.store.model.User;
+import pl.mkotlinski.online.store.model.UserAccount;
 
 public interface UserService {
 
-	public User getUserById(int id_user);
+	public UserAccount findUserById(int id_user);
 	
-	public void addUser(User user);
+	public UserAccount findByLogin(String sso);
+	
+	public void addUser(UserAccount user) throws Exception;
 }
