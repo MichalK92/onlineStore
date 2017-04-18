@@ -15,30 +15,34 @@ public class WebSpringSecurityConfiguration extends WebSecurityConfigurerAdapter
 {
 
 	@Autowired
-	@Qualifier("customUserdetailsService")
+	@Qualifier("storeUserDetailsService")
 	private UserDetailsService userDetailsService;
 
-/*	@Autowired
-	PersistentTokenRepository tokenRepository;
-*/
+	/*
+	 * @Autowired PersistentTokenRepository tokenRepository;
+	 */
+	
+	/*
+	 * Configuration User Details Service.
+	 */
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
 	{
 		auth.userDetailsService(userDetailsService);
 	//	auth.authenticationProvider(getAuthenticationProvider());
+		auth.userDetailsService(userDetailsService);
+		// auth.authenticationProvider(getAuthenticationProvider());
 	}
 
+	/*
+	 * Main configuration web security.
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception
 	{
-		http.authorizeRequests()
-        .antMatchers("/*").permitAll()
-        .and().formLogin().loginPage("/login")
-        //TODO: do usuniecia
-        .defaultSuccessUrl("/userInfo")
-        .usernameParameter("ssoId").passwordParameter("password")
-        .and().csrf().disable()
-        .exceptionHandling().accessDeniedPage("/Access_Denied");
+		http.authorizeRequests().antMatchers("/*").permitAll().and().formLogin().loginPage("/login")
+				.defaultSuccessUrl("/userInfo").usernameParameter("ssoId").passwordParameter("password").and().csrf()
+				.disable().exceptionHandling().accessDeniedPage("/Access_Denied");
 	}
 	/*
 	@Bean
@@ -69,5 +73,4 @@ public class WebSpringSecurityConfiguration extends WebSecurityConfigurerAdapter
 				"remember-me", userDetailsService, tokenRepository);
 		return tokenBasedservice;
 	}*/
-
 }

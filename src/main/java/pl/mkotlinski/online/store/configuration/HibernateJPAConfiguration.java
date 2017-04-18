@@ -24,10 +24,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class HibernateJPAConfiguration
 {
-
 	@Autowired
 	private Environment environment;
 
+	/*
+	 * Configuration data source properties. Values are read from property file (property file name was add in annotation - @PropertySource).
+	 */	
 	@Bean
 	public DataSource dataSource()
 	{
@@ -39,6 +41,9 @@ public class HibernateJPAConfiguration
 		return dataSource;
 	}
 
+	/*
+	 * Configuration EntityManagerFactory.
+	 */
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws NamingException
 	{
@@ -73,6 +78,15 @@ public class HibernateJPAConfiguration
 	{
 		JpaTransactionManager txManager = new JpaTransactionManager();
 		txManager.setEntityManagerFactory(emf);
+		txManager.setDataSource(dataSource());
 		return txManager;
 	}
+	
+/*    @Bean
+    @Autowired
+    public HibernateTransactionManager transactionManager(SessionFactory s) {
+       HibernateTransactionManager txManager = new HibernateTransactionManager();
+       txManager.setSessionFactory(s);
+       return txManager;
+    }*/
 }

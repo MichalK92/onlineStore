@@ -12,30 +12,36 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import pl.mkotlinski.online.store.model.UserAccount;
+import pl.mkotlinski.online.store.model.user.UserAccount;
+import pl.mkotlinski.online.store.model.user.UserProfile;
 
-@Service("customUserdetailsService")
-public class CustomUserDetailsService implements UserDetailsService {
-
+@Service("storeUserDetailsService")
+public class ApplicationUserDetailsService implements UserDetailsService
+{
 	@Autowired
 	private UserService userService;
 
 	@Override
-	public UserDetails loadUserByUsername(String ssoId) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String ssoId) throws UsernameNotFoundException
+	{
 		UserAccount userAccount = userService.findByLogin(ssoId);
-
-		if (userAccount == null) {
-			throw new UsernameNotFoundException("Username not found");
+		if(userAccount == null)
+		{
+			throw new UsernameNotFoundException("Username not found");			
 		}
 
 		return new User(userAccount.getLogin(), userAccount.getPassword(), true, true, true, true,
-				getGrantedAuthorities());
+				getGrantedAuthorities(userAccount));
 	}
 
-	private List<GrantedAuthority> getGrantedAuthorities() {
+	private List<GrantedAuthority> getGrantedAuthorities(UserAccount userAccount)
+	{
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		//TODO: USER ROLES		
-		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));	
+		
+		for(UserProfile userProfile : userAccount.getRoles())
+		{
+			authorities.add(new SimpleGrantedAuthority("ROLE_" + userProfile.getRole()));
+		}		
 		return authorities;
 	}
 

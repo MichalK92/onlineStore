@@ -1,15 +1,22 @@
-package pl.mkotlinski.online.store.model;
+package pl.mkotlinski.online.store.model.user;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CollectionId;
-
 @Entity
+@Table(name = "USER_ACCOUNT")
 public class UserAccount
 {
 
@@ -23,6 +30,16 @@ public class UserAccount
 	private String userName;
 
 	private String password;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "USER_ACCOUNT_ROLE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "USER_PROFILE_ID") })
+	private Set<UserProfile> roles = new HashSet<UserProfile>();
+	
+	public UserAccount()
+	{
+		
+	}
 
 	public long getId()
 	{
@@ -64,10 +81,20 @@ public class UserAccount
 		this.login = login;
 	}
 
+	public Set<UserProfile> getRoles()
+	{
+		return roles;
+	}
+
+	public void setRoles(Set<UserProfile> roles)
+	{
+		this.roles = roles;
+	}
+
 	@Override
 	public String toString()
 	{
-		return "UserAccount [id=" + id + ", login=" + login + ", userName=" + userName + ", password=" + password + "]";
+		return "UserAccount [id=" + id + ", login=" + login + ", userName=" + userName + ", roles=" + roles + "]";
 	}
 
 }

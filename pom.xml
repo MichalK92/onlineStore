@@ -104,8 +104,6 @@
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901.jdbc4</version>
 		</dependency>
-		
-		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -116,12 +114,61 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 			<scope>provided</scope>
-		</dependency> 				<!-- Send EMAIL [BEGIN] -->
+		</dependency>
+		<!-- Send EMAIL [BEGIN] -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
-		</dependency> 		<!-- Send EMAIL [END] -->
+		</dependency>
+		<!-- Send EMAIL [END] -->
+		<!-- TESTS [BEGIN] -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.7.19</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- TESTS [END] -->
+		<!-- LOG4j [BEGIN] -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<!-- LOG4j [BEGIN] -->
+
+		<!-- Apache Tiles [BEGIN] -->
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-core</artifactId>
+			<version>${apachetiles.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-api</artifactId>
+			<version>${apachetiles.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-servlet</artifactId>
+			<version>${apachetiles.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>${apachetiles.version}</version>
+		</dependency>
+	<!-- Apache Tiles [END] -->
 	</dependencies>
 	<properties>
 		<maven.compiler.source>1.7</maven.compiler.source>
@@ -129,6 +176,8 @@
 		<spring.security.version>4.0.4.RELEASE</spring.security.version>
 		<spring.version>4.3.7.RELEASE</spring.version>
 		<hibernate.version>4.3.10.Final</hibernate.version>
+		<log4j.version>1.2.17</log4j.version>
+		<apachetiles.version>3.0.5</apachetiles.version>
 	</properties>
 
 </project>
