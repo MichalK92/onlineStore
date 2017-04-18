@@ -1,0 +1,3 @@
+<div>
+ DEFAULT - FOOTER
+</div>
