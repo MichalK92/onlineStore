@@ -9,24 +9,32 @@ import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import pl.mkotlinski.online.store.MainController;
 import pl.mkotlinski.online.store.exception.user.UserExistsException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler
 {
 	private static final Logger logger = Logger.getLogger(GlobalExceptionHandler.class);
+	private static final String REDIRECT_404 = "redirect:/404";
 	
 	@ExceptionHandler(UserExistsException.class)
 	public ModelAndView handleUserExistsExcetpion(HttpServletRequest request, Exception ex)
 	{
-		ModelAndView mnv = new ModelAndView("redirect:/404");
+		ModelAndView mnv = new ModelAndView(REDIRECT_404);
 		
 		logger.error("User Exists Exception: " + ex);
 		
 		FlashMap outputFlashMap = RequestContextUtils.getOutputFlashMap(request);	
 		//Redirect model 
 		outputFlashMap.put("test", "test");		
+		return mnv;
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ModelAndView exception(HttpServletRequest request, Exception ex)
+	{
+		ModelAndView mnv = new ModelAndView(REDIRECT_404);
+		logger.error(ex);		
 		return mnv;
 	}
 }
