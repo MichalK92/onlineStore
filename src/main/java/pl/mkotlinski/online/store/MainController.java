@@ -47,7 +47,7 @@ public class MainController
 	{
 		ModelAndView mnv = new ModelAndView();
 		mnv.setViewName("index");
-		// test();
+		test();
 		return mnv;
 	}
 

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import pl.mkotlinski.online.store.exception.user.UserExistsException;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalExceptionHandler
 {
 	private static final Logger logger = Logger.getLogger(GlobalExceptionHandler.class);
