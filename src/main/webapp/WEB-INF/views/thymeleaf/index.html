@@ -1,16 +1,13 @@
-<html xmlns="http://www.thymeleaf.org"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.thymeleaf.org"	xmlns:th="http://www.thymeleaf.org">
 
 <form th:action="@{/login}" method="post">
 	<fieldset>
 		<div class="row">
 			<div class="form-group">
-				<input class="form-control" placeholder="User_name" name='ssoId'
-					type="text">
+				<input class="form-control" placeholder="User_name" name='ssoId' type="text">
 			</div>
 			<div class="form-group">
-				<input class="form-control" placeholder="password" name='password'
-					type="password" value="">
+				<input class="form-control" placeholder="password" name='password' type="password" value="">
 			</div>
 			<input class="btn btn-success btn-block" type="submit" value="Login">
 		</div>

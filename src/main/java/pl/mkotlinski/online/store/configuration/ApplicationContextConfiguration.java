@@ -11,6 +11,8 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
+
 @Configuration
 @EnableWebMvc
 public class ApplicationContextConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
@@ -32,6 +34,7 @@ public class ApplicationContextConfiguration extends WebMvcConfigurerAdapter imp
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(templateResolver());
 		templateEngine.setEnableSpringELCompiler(true);
+		templateEngine.addDialect(new LayoutDialect());
 		return templateEngine;
 	}
 
