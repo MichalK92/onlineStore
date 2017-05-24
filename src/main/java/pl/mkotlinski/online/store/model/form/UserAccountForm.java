@@ -2,6 +2,10 @@ package pl.mkotlinski.online.store.model.form;
 
 import pl.mkotlinski.online.store.model.user.UserAccount;
 
+/**
+ * @author Michal K
+ * Date: 24.05.2017
+ */
 public class UserAccountForm
 {
 	private String login;
@@ -85,5 +89,14 @@ public class UserAccountForm
 		user.setPassword(this.getPassword());
 		return user;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "UserAccountForm [login=" + login + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", emailAddress=" + emailAddress + ", password=" + password + ", password2=" + password2 + "]";
+	}
+	
+	
 
 }

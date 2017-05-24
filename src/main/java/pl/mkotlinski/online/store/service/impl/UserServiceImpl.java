@@ -34,6 +34,8 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void addUser(UserAccount user) throws UserExistsException
 	{
+		user.setLogin(user.getLogin().toLowerCase());
+		
 		UserAccount userAccount = findByLogin(user.getLogin());	
 		if(userAccount != null){
 			throw new UserExistsException(user.getLogin());				

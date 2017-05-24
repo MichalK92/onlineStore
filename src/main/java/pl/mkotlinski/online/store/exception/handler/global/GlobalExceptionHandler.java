@@ -1,5 +1,7 @@
 package pl.mkotlinski.online.store.exception.handler.global;
 
+import java.net.BindException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -26,6 +28,23 @@ public class GlobalExceptionHandler
 		outputFlashMap.put("test", "test");		
 		return mnv;
 	}
+
+	@ExceptionHandler(BindException.class)
+	public ModelAndView handlerBindException(HttpServletRequest request, Exception ex)
+	{
+		ModelAndView mnv = new ModelAndView();
+		ex.printStackTrace();
+		return mnv;
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ModelAndView handlerException(HttpServletRequest request, Exception ex)
+	{
+		ModelAndView mnv = new ModelAndView();
+		ex.printStackTrace();
+		return mnv;
+	}
+	
 	/*
 	@ExceptionHandler(Exception.class)
 	public ModelAndView exception(HttpServletRequest request, Exception ex)
