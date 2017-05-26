@@ -46,8 +46,17 @@ public class MainController
 	public ModelAndView defaultPage() throws UserExistsException
 	{
 		ModelAndView mnv = new ModelAndView();
-		mnv.setViewName("index");
-		// test();
+		mnv.setViewName("layout/layout");
+	//	test();
+		return mnv;
+	}
+	
+	@RequestMapping(value = "/test")
+	public ModelAndView testThymeleaf() throws UserExistsException
+	{
+		ModelAndView mnv = new ModelAndView();
+		mnv.setViewName("layout/test");
+	//	test();
 		return mnv;
 	}
 
@@ -130,7 +139,7 @@ public class MainController
 	private void test() throws UserExistsException
 	{
 		UserAccount userAccount = new UserAccount();
-		userAccount.setLogin("test33");
+		userAccount.setLogin("michal");
 		userAccount.setPassword("test");
 		userAccount.getRoles().add(userRoleService.findByName(UserRoleTypeEnum.USER.getUserRole()));
 		UserAccount userAccount2 = new UserAccount();
@@ -139,6 +148,6 @@ public class MainController
 		userAccount2.getRoles().add(userRoleService.findByName(UserRoleTypeEnum.ADMIN.getUserRole()));
 		userAccount2.getRoles().add(userRoleService.findByName(UserRoleTypeEnum.USER.getUserRole()));
 		userService.addUser(userAccount);
-		userService.addUser(userAccount2);
+		//userService.addUser(userAccount2);
 	}
 }
