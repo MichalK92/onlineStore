@@ -2,12 +2,14 @@ package pl.mkotlinski.online.store.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 @Configuration
 @EnableWebSecurity
@@ -44,6 +46,7 @@ public class WebSpringSecurityConfiguration extends WebSecurityConfigurerAdapter
 				.defaultSuccessUrl("/userInfo").usernameParameter("ssoId").passwordParameter("password").and().csrf()
 				.disable().exceptionHandling().accessDeniedPage("/Access_Denied");
 	}
+
 	/*
 	@Bean
 	public DaoAuthenticationProvider getAuthenticationProvider()

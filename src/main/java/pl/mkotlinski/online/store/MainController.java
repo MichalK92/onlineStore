@@ -5,15 +5,17 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,16 +26,20 @@ import pl.mkotlinski.online.store.model.user.UserAccount;
 import pl.mkotlinski.online.store.model.user.UserRoleTypeEnum;
 import pl.mkotlinski.online.store.service.UserRoleService;
 import pl.mkotlinski.online.store.service.UserService;
+import pl.mkotlinski.online.store.validator.UserFormValidator;
 
 @Controller
 public class MainController
 {
-	private static final Logger logger = Logger.getLogger(MainController.class);
+	//private static final Logger logger = Logger.getLogger(MainController.class);
+	
+	@Autowired
+	private UserFormValidator userFormValidator;
 
 	@InitBinder
 	private void initBinding(WebDataBinder binder)
 	{
-		
+		binder.setValidator(userFormValidator);
 	}
 	
 	@Autowired
@@ -66,7 +72,7 @@ public class MainController
 	public ModelAndView login(Model model)
 	{
 		ModelAndView mnv = new ModelAndView();
-		mnv.setViewName("login");
+		mnv.setViewName("login/loginPage");
 		return mnv;
 	}
 
@@ -74,10 +80,11 @@ public class MainController
 	public ModelAndView userInfo(Model model)
 	{
 		ModelAndView mnv = new ModelAndView();
-		mnv.setViewName("userInfo");
-
+		
 		String principalString = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
 		mnv.addObject("principal", principalString);
+		
+		mnv.setViewName("login/userInfo");
 		return mnv;
 	}
 
@@ -99,16 +106,24 @@ public class MainController
 	public ModelAndView registerUserGET(Model model)
 	{
 		ModelAndView mnv = new ModelAndView();
-		mnv.setViewName("registerUser");
 		UserAccountForm userAccountForm = new UserAccountForm();
 		model.addAttribute("userAccountForm", userAccountForm);
+
+		mnv.setViewName("registerUser/registerUser");
 		return mnv;
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ModelAndView registerUserPOST(Model model)
+	public ModelAndView registerUserPOST(Model model, @ModelAttribute("userAccountForm") @Validated UserAccountForm userAccountForm, BindingResult bindingResult) throws UserExistsException
 	{
 		ModelAndView mnv = new ModelAndView();
+		
+		if (bindingResult.hasErrors()) {
+            mnv.setViewName("registerUser/registerUser");
+            return mnv;
+        }
+		
+		userService.addUser(userAccountForm.getUser());
 		
 		mnv.setViewName("index");		
 		return mnv;
@@ -123,7 +138,7 @@ public class MainController
 	{
 		ModelAndView mnv = new ModelAndView();
 
-		mnv.setViewName("errorPage/accessDenied");
+		mnv.setViewName("error/accessDenied");
 		return mnv;
 	}
 
@@ -131,7 +146,7 @@ public class MainController
 	public ModelAndView notFound(Model model, Principal principal)
 	{
 		ModelAndView mnv = new ModelAndView();
-		mnv.setViewName("errorPage404");
+		mnv.setViewName("error/errorPage404");
 		return mnv;
 	}
 	// ERROR PAGE [END]

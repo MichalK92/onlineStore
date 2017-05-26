@@ -1,0 +1,21 @@
+<html xmlns="http://www.thymeleaf.org"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorate="~{layout/layout}">
+<head>
+<title>User Info</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		User Info
+		<div sec:authorize="isAuthenticated()">Zalogowany jako : 
+			<p th:text="${principal}">MockUserInfo</p>
+		</div>
+		<div sec:authorize="isAnonymous()">
+			Niezalogowany
+
+		</div>
+	</div>
+</body>
+</html>
