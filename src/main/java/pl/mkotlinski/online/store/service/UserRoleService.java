@@ -2,13 +2,13 @@ package pl.mkotlinski.online.store.service;
 
 import java.util.List;
 
-import pl.mkotlinski.online.store.model.user.UserProfile;
+import pl.mkotlinski.online.store.model.user.UserRole;
 
 public interface UserRoleService
 {
-	public List<UserProfile> findAll();
+	public List<UserRole> findAll();
 
-	public UserProfile findById(long id);
+	public UserRole findById(long id);
 
-	public UserProfile findByName(String name);
+	public UserRole findByName(String name);
 }

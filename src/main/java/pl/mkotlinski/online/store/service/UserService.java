@@ -25,15 +25,23 @@ public interface UserService {
 	 * 
 	 * @param sso String value
 	 * @return UserAccount
+	 * @throws UserNotFoundException 
 	 */
 	
 	public UserAccount findByLogin(String sso);
 	
 	/**
-	 * This method 
+	 * This method try add user to repository.
 	 * @param user
 	 * @throws UserExistsException 
 	 * @throws Exception
 	 */
 	public void addUser(UserAccount user) throws UserExistsException;
+	
+	
+	/**
+	 * Method invoked during user registration. Adds a shopping cart to the user.
+	 * @param user
+	 */
+	public void addCartToUser(UserAccount user);
 }

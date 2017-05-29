@@ -8,14 +8,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER_PROFILE")
-public class UserProfile
+@Table(name = "USER_ROLE")
+public class UserRole
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID")
 	private Integer id;
 
-	@Column(unique=true, nullable=false)
+	@Column(name="ROLE", unique=true, nullable=false)
 	private String role;
 
 	public Integer getId()
@@ -57,7 +58,7 @@ public class UserProfile
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserProfile other = (UserProfile) obj;
+		UserRole other = (UserRole) obj;
 		if (id == null)
 		{
 			if (other.id != null)

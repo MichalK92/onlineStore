@@ -37,4 +37,9 @@ public abstract class AbstractDao<PRIMARYKEY extends Serializable, T>
 	{
 		entityManager.persist(entity);
 	}
+	
+	protected void merge(T entity)
+	{
+		entityManager.merge(entity);
+	}
 }

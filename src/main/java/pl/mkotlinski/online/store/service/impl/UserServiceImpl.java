@@ -42,6 +42,8 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		userDao.addUser(user);
+		//Je¿eli null, to tranzakcja siê nie wykona
+		addCartToUser(user);
 	}
 
 	@Override
@@ -49,6 +51,10 @@ public class UserServiceImpl implements UserService{
 	{		
 		return userDao.findByLogin(login);
 	}
-	
-	
+
+	@Override
+	public void addCartToUser(UserAccount user)
+	{
+		userDao.addCartToUser(user);		
+	}
 }

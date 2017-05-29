@@ -5,6 +5,7 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,38 +23,50 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pl.mkotlinski.online.store.exception.user.UserExistsException;
 import pl.mkotlinski.online.store.model.form.UserAccountForm;
-import pl.mkotlinski.online.store.model.user.UserAccount;
-import pl.mkotlinski.online.store.model.user.UserRoleTypeEnum;
+import pl.mkotlinski.online.store.model.product.Product;
 import pl.mkotlinski.online.store.service.UserRoleService;
 import pl.mkotlinski.online.store.service.UserService;
+import pl.mkotlinski.online.store.service.cart.CartService;
+import pl.mkotlinski.online.store.service.product.ProductService;
+import pl.mkotlinski.online.store.utils.SystemUtils;
 import pl.mkotlinski.online.store.validator.UserFormValidator;
 
 @Controller
 public class MainController
 {
-	//private static final Logger logger = Logger.getLogger(MainController.class);
+	private static final Logger logger = Logger.getLogger(MainController.class);
 	
 	@Autowired
-	private UserFormValidator userFormValidator;
-
-	@InitBinder
-	private void initBinding(WebDataBinder binder)
-	{
-		binder.setValidator(userFormValidator);
-	}
+	private ProductService productService;
 	
 	@Autowired
 	private UserService userService;
 
 	@Autowired
-	UserRoleService userRoleService;
+	private UserRoleService userRoleService;
+	
+	@Autowired
+	private CartService cartService;
+	
+	@Autowired
+	private UserFormValidator userFormValidator;
+	
+	@Autowired
+	private SystemUtils systemUtils;
+	
+	@InitBinder
+	private void initBinding(WebDataBinder binder)
+	{
+		binder.setValidator(userFormValidator);
+	}
 
 	@RequestMapping(value = "/")
 	public ModelAndView defaultPage() throws UserExistsException
 	{
 		ModelAndView mnv = new ModelAndView();
 		mnv.setViewName("layout/layout");
-	//	test();
+		test();
+		
 		return mnv;
 	}
 	
@@ -62,7 +75,7 @@ public class MainController
 	{
 		ModelAndView mnv = new ModelAndView();
 		mnv.setViewName("layout/test");
-	//	test();
+		test2();
 		return mnv;
 	}
 
@@ -80,9 +93,6 @@ public class MainController
 	public ModelAndView userInfo(Model model)
 	{
 		ModelAndView mnv = new ModelAndView();
-		
-		String principalString = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-		mnv.addObject("principal", principalString);
 		
 		mnv.setViewName("login/userInfo");
 		return mnv;
@@ -121,10 +131,8 @@ public class MainController
 		if (bindingResult.hasErrors()) {
             mnv.setViewName("registerUser/registerUser");
             return mnv;
-        }
-		
-		userService.addUser(userAccountForm.getUser());
-		
+        }		
+		userService.addUser(userAccountForm.getUser());		
 		mnv.setViewName("index");		
 		return mnv;
 	}
@@ -150,19 +158,24 @@ public class MainController
 		return mnv;
 	}
 	// ERROR PAGE [END]
-
-	private void test() throws UserExistsException
+	
+	private void test()
 	{
-		UserAccount userAccount = new UserAccount();
-		userAccount.setLogin("michal");
-		userAccount.setPassword("test");
-		userAccount.getRoles().add(userRoleService.findByName(UserRoleTypeEnum.USER.getUserRole()));
-		UserAccount userAccount2 = new UserAccount();
-		userAccount2.setLogin("test244");
-		userAccount2.setPassword("test");
-		userAccount2.getRoles().add(userRoleService.findByName(UserRoleTypeEnum.ADMIN.getUserRole()));
-		userAccount2.getRoles().add(userRoleService.findByName(UserRoleTypeEnum.USER.getUserRole()));
-		userService.addUser(userAccount);
-		//userService.addUser(userAccount2);
+		Product product = new Product();
+		product.setProductName("P1");
+		Product product2 = new Product();
+		product2.setProductName("P1");
+		
+		productService.addNewProduct(product);
+		productService.addNewProduct(product2);
+	}
+	
+	private void test2()
+	{
+		System.out.println("Login" + systemUtils.getLoggedUser().getLogin());
+		//Product product = productService.getProductById(3);
+		//UserAccount userAccount = userService.findByLogin(SystemUtils.getLoggedUserLogin());
+	//	System.out.println(userAccount.getCart().getProductList());
+		//cartService.addProductToCart(userAccount.getCart(), product);
 	}
 }

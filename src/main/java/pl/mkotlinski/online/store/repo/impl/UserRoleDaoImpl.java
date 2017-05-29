@@ -16,14 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import pl.mkotlinski.online.store.model.user.UserProfile;
+import pl.mkotlinski.online.store.model.user.UserRole;
 import pl.mkotlinski.online.store.model.user.UserRoleTypeEnum;
 import pl.mkotlinski.online.store.repo.UserRoleDao;
 import pl.mkotlinski.online.store.repo.abstractDao.AbstractDao;
 
 @Repository("userRoleDao")
 @Transactional
-public class UserRoleDaoImpl extends AbstractDao<Long, UserProfile> implements UserRoleDao
+public class UserRoleDaoImpl extends AbstractDao<Long, UserRole> implements UserRoleDao
 {
 
 	@Autowired
@@ -45,24 +45,24 @@ public class UserRoleDaoImpl extends AbstractDao<Long, UserProfile> implements U
 	}
 
 	@Override
-	public List<UserProfile> findAll()
+	public List<UserRole> findAll()
 	{
 		return null;
 	}
 
 	@Override
-	public UserProfile findById(long id)
+	public UserRole findById(long id)
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public UserProfile findByName(String name)
+	public UserRole findByName(String name)
 	{
 		Session session = getEntityMenager().unwrap(Session.class);
-		Criteria criteria = session.createCriteria(UserProfile.class).add(Restrictions.eq("role", name));
-		UserProfile profile = (UserProfile) criteria.uniqueResult();
+		Criteria criteria = session.createCriteria(UserRole.class).add(Restrictions.eq("role", name));
+		UserRole profile = (UserRole) criteria.uniqueResult();
 		return profile;
 	}
 
@@ -77,10 +77,10 @@ public class UserRoleDaoImpl extends AbstractDao<Long, UserProfile> implements U
 		UserRoleTypeEnum[] rolesTable = UserRoleTypeEnum.class.getEnumConstants();
 		for (UserRoleTypeEnum roleName : rolesTable)
 		{
-			UserProfile r = findByName(roleName.getUserRole());
+			UserRole r = findByName(roleName.getUserRole());
 			if (r == null)
 			{
-				UserProfile role = new UserProfile();
+				UserRole role = new UserRole();
 				role.setRole(roleName.getUserRole());
 				persist(role);
 			}
