@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.mkotlinski.online.store.model.user.UserProfile;
+import pl.mkotlinski.online.store.model.user.UserRole;
 import pl.mkotlinski.online.store.repo.UserRoleDao;
 import pl.mkotlinski.online.store.service.UserRoleService;
 
@@ -21,20 +21,20 @@ public class UserRoleServiceImpl implements UserRoleService
 	private UserRoleDao userRoleDao;
 
 	@Override
-	public List<UserProfile> findAll()
+	public List<UserRole> findAll()
 	{
 		return userRoleDao.findAll();
 	}
 
 	@Override
-	public UserProfile findById(long id)
+	public UserRole findById(long id)
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public UserProfile findByName(String name)
+	public UserRole findByName(String name)
 	{
 		return userRoleDao.findByName(name);
 	}

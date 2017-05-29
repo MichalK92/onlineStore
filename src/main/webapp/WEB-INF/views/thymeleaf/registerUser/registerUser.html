@@ -10,8 +10,7 @@
 	<div layout:fragment="content">
 		User Info
 		<div sec:authorize="isAuthenticated()">
-			Zalogowany jako :
-			<p th:text="${principal}">MockUserInfo</p>
+			Zalogowany
 		</div>
 		<div sec:authorize="isAnonymous()">
 			<div>

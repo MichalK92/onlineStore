@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import pl.mkotlinski.online.store.model.user.UserAccount;
-import pl.mkotlinski.online.store.model.user.UserProfile;
+import pl.mkotlinski.online.store.model.user.UserRole;
 
 @Service("storeUserDetailsService")
 public class ApplicationUserDetailsService implements UserDetailsService
@@ -38,7 +38,7 @@ public class ApplicationUserDetailsService implements UserDetailsService
 	{
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		
-		for(UserProfile userProfile : userAccount.getRoles())
+		for(UserRole userProfile : userAccount.getRoles())
 		{
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + userProfile.getRole()));
 		}		

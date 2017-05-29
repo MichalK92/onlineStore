@@ -12,6 +12,7 @@
               <a href="#" th:href="@{/}">Strona Główna</a>
             </li>
             <li sec:authorize="isAuthenticated()">
+            <span th:text ="${#authentication.getPrincipal()}"></span>
             	<a href="#" th:href="@{/logout}">Wyloguj</a>
             </li>
             <li sec:authorize="isAnonymous()">
