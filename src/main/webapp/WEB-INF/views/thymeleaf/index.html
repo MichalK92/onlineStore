@@ -1,4 +1,15 @@
-<html xmlns="http://www.thymeleaf.org"	xmlns:th="http://www.thymeleaf.org">
-
-INDEX
+<html xmlns="http://www.thymeleaf.org"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="utf-8" />
+<title>Strona główna</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		Hello World
+	</div>
+</body>
 </html>

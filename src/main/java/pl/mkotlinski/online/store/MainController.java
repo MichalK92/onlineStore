@@ -64,9 +64,7 @@ public class MainController
 	public ModelAndView defaultPage() throws UserExistsException
 	{
 		ModelAndView mnv = new ModelAndView();
-		mnv.setViewName("layout/layout");
-		test();
-		
+		mnv.setViewName("index");		
 		return mnv;
 	}
 	
@@ -131,7 +129,16 @@ public class MainController
 		if (bindingResult.hasErrors()) {
             mnv.setViewName("registerUser/registerUser");
             return mnv;
-        }		
+        }
+		
+		if(userService.findByLogin(userAccountForm.getLogin()) != null)
+		{
+			model.addAttribute("userExistError", "userExistError");
+            mnv.setViewName("registerUser/registerUser");
+            return mnv;
+		}
+		
+		
 		userService.addUser(userAccountForm.getUser());		
 		mnv.setViewName("index");		
 		return mnv;

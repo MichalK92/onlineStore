@@ -5,59 +5,77 @@
 	layout:decorate="~{layout/layout}">
 <head>
 <title>User Info</title>
+<meta charset="utf-8" />
 </head>
 <body>
 	<div layout:fragment="content">
-		User Info
-		<div sec:authorize="isAuthenticated()">
-			Zalogowany
-		</div>
+		<div sec:authorize="isAuthenticated()">Zalogowany</div>
 		<div sec:authorize="isAnonymous()">
 			<div>
-				<p>Register User</p>
-
-				<form th:object="${userAccountForm}" th:action="@{register}" method="POST">
-					<div>
-						<label>Login: </label>
-						<input type="text" th:field="*{login}" placeholder=""></input>
-						<div th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Name Error</div>
+				<div class="row">
+					<div class="col-md-offset-3 col-md-6">
+						<div class="panel panel-info">
+							<div class="panel-heading">Formularz rejestrayjny</div>
+							<div class="panel-body">
+								<div th:if="${userExistError != null}"
+									class="alert alert-danger alert-dismissable">
+									<button type="button" class="close" data-dismiss="alert"
+										aria-hidden="true">&times;</button>
+									<p>Taki użytkownik już istnieje</p>
+								</div>
+								<form th:object="${userAccountForm}" th:action="@{register}"
+									method="POST">
+									<div class="col-md-12">
+										<label class="col-md-12">Login: </label> <input type="text"
+											th:field="*{login}" placeholder=""
+											class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+										<div th:if="${#fields.hasErrors('login')}"
+											th:errors="*{login}"
+											class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name
+											Error</div>
+									</div>
+									<div class="col-md-12">
+										<label class="col-md-12">User First Name: </label> <input
+											type="text" th:field="*{firstName}" placeholder=""
+											class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+									</div>
+									<div class="col-md-12">
+										<label class="col-md-12">User Last Name: </label> <input
+											type="text" th:field="*{lastName}" placeholder=""
+											class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+									</div>
+									<div class="col-md-12">
+										<label class="col-md-12">Email Address: </label> <input
+											type="text" th:field="*{emailAddress}" placeholder=""
+											class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+									</div>
+									<div class="col-md-12">
+										<label class="col-md-12">Email Address: </label> <input
+											type="text" th:field="*{emailAddress}" placeholder=""
+											class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+									</div>
+									<div class="col-md-12">
+										<label class="col-md-12">Password: </label> <input type="text"
+											th:field="*{password}" placeholder=""
+											class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+									</div>
+									<div class="col-md-12">
+										<label class="col-md-12">Repeat password: </label> <input
+											type="text" th:field="*{password2}" placeholder=""
+											class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+										<div th:if="${#fields.hasErrors('password')}"
+											th:errors="*{password}"
+											class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name
+											Error</div>
+									</div>
+									<div class="col-md-12">
+										<button type="submit" class="btn btn-default">Register</button>
+									</div>
+								</form>
+							</div>
+						</div>
 					</div>
-
-					<div>
-						<label>User First Name: </label>
-						<input type="text"  th:field="*{firstName}" placeholder=""></input>
-					</div>
-
-					<div>
-						<label>User Last Name: </label>
-						<input type="text"  th:field="*{lastName}" placeholder=""></input>
-					</div>
-
-					<div>
-						<label>Email Address: </label>
-						<input type="text"  th:field="*{emailAddress}" placeholder=""></input>
-					</div>
-
-					<div>
-						<label>Email Address: </label>
-						<input type="text"  th:field="*{emailAddress}" placeholder=""></input>
-					</div>
-
-					<div>
-						<label>Password: </label>
-						<input type="text"  th:field="*{password}" placeholder=""></input>
-					</div>
-
-					<div>
-						<label>Repeat password: </label>
-						<input type="text"  th:field="*{password2}" placeholder=""></input>
-						<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</div>
-					</div>
-
-					<div>
-						<button type="submit">Register</button>
-					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>
