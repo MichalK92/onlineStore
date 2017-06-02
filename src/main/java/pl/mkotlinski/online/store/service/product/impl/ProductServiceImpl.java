@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import pl.mkotlinski.online.store.exception.product.ProductNotFoundException;
 import pl.mkotlinski.online.store.model.product.Product;
 import pl.mkotlinski.online.store.repo.product.ProductDao;
 import pl.mkotlinski.online.store.service.product.ProductService;
@@ -30,14 +31,20 @@ public class ProductServiceImpl implements ProductService
 	@Override
 	public List<Product> getAllProducts()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return productDao.getAllProducts();
 	}
 
 	@Override
-	public Product getProductById(long id_product)
+	public Product getProductById(long id_product) throws ProductNotFoundException
 	{
-		return productDao.getProductById(id_product);
+		Product product = productDao.getProductById(id_product);
+		
+		if(product == null)
+		{
+			throw new ProductNotFoundException(id_product);
+		}
+		
+		return product;
 	}
 	
 }

@@ -17,7 +17,7 @@ public class UserFormValidator implements Validator
 	@Override
 	public boolean supports(Class<?> paramClass)
 	{
-		return UserAccountForm.class.equals(paramClass);
+		return UserAccountForm.class.isAssignableFrom(paramClass);
 	}
 
 	@Override

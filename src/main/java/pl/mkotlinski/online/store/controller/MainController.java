@@ -1,4 +1,6 @@
-package pl.mkotlinski.online.store;
+package pl.mkotlinski.online.store.controller;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
 
 import java.security.Principal;
 
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.mkotlinski.online.store.exception.user.UserExistsException;
+import pl.mkotlinski.online.store.exception.user.UserNotLoggedException;
+import pl.mkotlinski.online.store.model.cart.Cart;
 import pl.mkotlinski.online.store.model.form.UserAccountForm;
 import pl.mkotlinski.online.store.model.product.Product;
 import pl.mkotlinski.online.store.service.UserRoleService;
@@ -35,44 +39,50 @@ import pl.mkotlinski.online.store.validator.UserFormValidator;
 public class MainController
 {
 	private static final Logger logger = Logger.getLogger(MainController.class);
-	
+
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private UserService userService;
 
 	@Autowired
 	private UserRoleService userRoleService;
-	
+
 	@Autowired
 	private CartService cartService;
-	
+
 	@Autowired
 	private UserFormValidator userFormValidator;
-	
+
 	@Autowired
 	private SystemUtils systemUtils;
-	
+
 	@InitBinder
 	private void initBinding(WebDataBinder binder)
 	{
+		if (binder.getTarget() instanceof Cart)
+		{
+			return;
+		}
 		binder.setValidator(userFormValidator);
+	}
+	@ModelAttribute("testKoszyk")
+	public Cart sessionShopCart() throws UserNotLoggedException
+	{
+		if (systemUtils.isUserLogged())
+		{
+			return userService.findByLogin(systemUtils.getLoggedUserLogin()).getCart();
+		}
+		return null;
 	}
 
 	@RequestMapping(value = "/")
-	public ModelAndView defaultPage() throws UserExistsException
+	public ModelAndView defaultPage() throws UserExistsException, UserNotLoggedException
 	{
 		ModelAndView mnv = new ModelAndView();
-		mnv.setViewName("index");		
-		return mnv;
-	}
-	
-	@RequestMapping(value = "/test")
-	public ModelAndView testThymeleaf() throws UserExistsException
-	{
-		ModelAndView mnv = new ModelAndView();
-		mnv.setViewName("layout/test");
+		mnv.addObject("productList", productService.getAllProducts());
+		mnv.setViewName("index");
 		test2();
 		return mnv;
 	}
@@ -84,15 +94,6 @@ public class MainController
 	{
 		ModelAndView mnv = new ModelAndView();
 		mnv.setViewName("login/loginPage");
-		return mnv;
-	}
-
-	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
-	public ModelAndView userInfo(Model model)
-	{
-		ModelAndView mnv = new ModelAndView();
-		
-		mnv.setViewName("login/userInfo");
 		return mnv;
 	}
 
@@ -122,25 +123,25 @@ public class MainController
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ModelAndView registerUserPOST(Model model, @ModelAttribute("userAccountForm") @Validated UserAccountForm userAccountForm, BindingResult bindingResult) throws UserExistsException
+	public ModelAndView registerUserPOST(Model model,
+			@ModelAttribute("userAccountForm") @Validated UserAccountForm userAccountForm, BindingResult bindingResult)
+			throws UserExistsException
 	{
 		ModelAndView mnv = new ModelAndView();
-		
-		if (bindingResult.hasErrors()) {
-            mnv.setViewName("registerUser/registerUser");
-            return mnv;
-        }
-		
-		if(userService.findByLogin(userAccountForm.getLogin()) != null)
+
+		if (bindingResult.hasErrors())
+		{
+			mnv.setViewName("registerUser/registerUser");
+			return mnv;
+		}
+		if (userService.findByLogin(userAccountForm.getLogin()) != null)
 		{
 			model.addAttribute("userExistError", "userExistError");
-            mnv.setViewName("registerUser/registerUser");
-            return mnv;
+			mnv.setViewName("registerUser/registerUser");
+			return mnv;
 		}
-		
-		
-		userService.addUser(userAccountForm.getUser());		
-		mnv.setViewName("index");		
+		userService.addUser(userAccountForm.getUser());
+		mnv.setViewName("index");
 		return mnv;
 	}
 
@@ -164,25 +165,26 @@ public class MainController
 		mnv.setViewName("error/errorPage404");
 		return mnv;
 	}
+
 	// ERROR PAGE [END]
-	
 	private void test()
 	{
 		Product product = new Product();
 		product.setProductName("P1");
 		Product product2 = new Product();
 		product2.setProductName("P1");
-		
+
 		productService.addNewProduct(product);
 		productService.addNewProduct(product2);
 	}
-	
-	private void test2()
+
+	private void test2() throws UserNotLoggedException
 	{
 		System.out.println("Login" + systemUtils.getLoggedUser().getLogin());
-		//Product product = productService.getProductById(3);
-		//UserAccount userAccount = userService.findByLogin(SystemUtils.getLoggedUserLogin());
-	//	System.out.println(userAccount.getCart().getProductList());
-		//cartService.addProductToCart(userAccount.getCart(), product);
+		// Product product = productService.getProductById(3);
+		// UserAccount userAccount =
+		// userService.findByLogin(SystemUtils.getLoggedUserLogin());
+		// System.out.println(userAccount.getCart().getProductList());
+		// cartService.addProductToCart(userAccount.getCart(), product);
 	}
 }

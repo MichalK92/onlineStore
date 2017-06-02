@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pl.mkotlinski.online.store.model.cart.Cart;
 import pl.mkotlinski.online.store.model.product.Product;
+import pl.mkotlinski.online.store.model.user.UserAccount;
 import pl.mkotlinski.online.store.repo.cart.CartDao;
 import pl.mkotlinski.online.store.service.cart.CartService;
 
@@ -32,5 +33,4 @@ public class CartServiceImpl implements CartService
 	{
 		return cartDao.addProductsToCart(cart, products);
 	}
-
 }

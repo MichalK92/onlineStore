@@ -11,18 +11,20 @@ import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import pl.mkotlinski.online.store.exception.product.ProductNotFoundException;
 import pl.mkotlinski.online.store.exception.user.UserExistsException;
+import pl.mkotlinski.online.store.exception.user.UserNotLoggedException;
+import pl.mkotlinski.online.store.utils.StaticStringValue;
 
 @ControllerAdvice
 public class GlobalExceptionHandler
 {
 	private static final Logger logger = Logger.getLogger(GlobalExceptionHandler.class);
-	private static final String REDIRECT_404 = "redirect:/404";
 	
 	@ExceptionHandler(UserExistsException.class)
 	public ModelAndView handleUserExistsExcetpion(HttpServletRequest request, Exception ex)
 	{
-		ModelAndView mnv = new ModelAndView(REDIRECT_404);		
+		ModelAndView mnv = new ModelAndView(StaticStringValue.REDIRECT_404);		
 		logger.error("User Exists Exception: " + ex);		
 		FlashMap outputFlashMap = RequestContextUtils.getOutputFlashMap(request);	
 		outputFlashMap.put("test", "test");		
@@ -44,6 +46,26 @@ public class GlobalExceptionHandler
 		ex.printStackTrace();
 		return mnv;
 	}
+	
+	@ExceptionHandler(UserNotLoggedException.class)
+	public ModelAndView handlerUserNotLogged(HttpServletRequest request, Exception ex)
+	{
+		ModelAndView mnv = new ModelAndView();
+		logger.error("User Not Logged Exception :", ex);
+		mnv.setViewName("index");
+		return mnv;
+	}
+	
+	//Product Exceptions[BEGIN]
+	@ExceptionHandler(ProductNotFoundException.class)
+	public ModelAndView handlerProductNotFound(HttpServletRequest request, Exception ex)
+	{
+		ModelAndView mnv = new ModelAndView();
+		ex.printStackTrace();
+		mnv.setViewName("index");
+		return mnv;
+	}
+	//Product Exceptions[END]
 	
 	/*
 	@ExceptionHandler(Exception.class)

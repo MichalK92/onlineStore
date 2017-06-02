@@ -4,6 +4,7 @@ import java.util.List;
 
 import pl.mkotlinski.online.store.model.cart.Cart;
 import pl.mkotlinski.online.store.model.product.Product;
+import pl.mkotlinski.online.store.model.user.UserAccount;
 
 public interface CartService
 {

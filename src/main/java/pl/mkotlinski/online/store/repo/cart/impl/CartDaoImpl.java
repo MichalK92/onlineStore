@@ -2,6 +2,7 @@ package pl.mkotlinski.online.store.repo.cart.impl;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 
 import pl.mkotlinski.online.store.model.cart.Cart;
@@ -24,8 +25,6 @@ public class CartDaoImpl extends AbstractDao<Long, Cart> implements CartDao
 	@Override
 	public Cart addProductsToCart(Cart cart, List<Product> products)
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

@@ -43,7 +43,7 @@ public class WebSpringSecurityConfiguration extends WebSecurityConfigurerAdapter
 	protected void configure(HttpSecurity http) throws Exception
 	{
 		http.authorizeRequests().antMatchers("/*").permitAll().and().formLogin().loginPage("/login")
-				.defaultSuccessUrl("/userInfo").usernameParameter("ssoId").passwordParameter("password").and().csrf()
+				.defaultSuccessUrl("/").usernameParameter("ssoId").passwordParameter("password").and().csrf()
 				.disable().exceptionHandling().accessDeniedPage("/Access_Denied");
 	}
 

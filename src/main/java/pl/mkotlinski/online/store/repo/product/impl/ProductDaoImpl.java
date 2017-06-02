@@ -2,6 +2,7 @@ package pl.mkotlinski.online.store.repo.product.impl;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import pl.mkotlinski.online.store.model.product.Product;
@@ -20,8 +21,9 @@ public class ProductDaoImpl extends AbstractDao<Long, Product> implements Produc
 	@Override
 	public List<Product> getAllProducts()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Session session = getEntityMenager().unwrap(Session.class);
+		List<Product> productList = session.createCriteria(Product.class).list();
+		return productList;
 	}
 
 	@Override
