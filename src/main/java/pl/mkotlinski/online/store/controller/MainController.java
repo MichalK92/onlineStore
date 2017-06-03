@@ -83,7 +83,6 @@ public class MainController
 		ModelAndView mnv = new ModelAndView();
 		mnv.addObject("productList", productService.getAllProducts());
 		mnv.setViewName("index");
-		test2();
 		return mnv;
 	}
 
@@ -172,7 +171,7 @@ public class MainController
 		Product product = new Product();
 		product.setProductName("P1");
 		Product product2 = new Product();
-		product2.setProductName("P1");
+		product2.setProductName("P2");
 
 		productService.addNewProduct(product);
 		productService.addNewProduct(product2);
@@ -180,7 +179,7 @@ public class MainController
 
 	private void test2() throws UserNotLoggedException
 	{
-		System.out.println("Login" + systemUtils.getLoggedUser().getLogin());
+		//System.out.println("Login" + systemUtils.getLoggedUser().getLogin());
 		// Product product = productService.getProductById(3);
 		// UserAccount userAccount =
 		// userService.findByLogin(SystemUtils.getLoggedUserLogin());

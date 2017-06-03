@@ -29,23 +29,19 @@
 					<div class="thumbnail">
 						<img class="group list-group-image"	src="http://placehold.it/400x250/000/fff" alt="" />
 						<div class="caption">
-							<h4 class="group inner list-group-item-heading">Product	title</h4>
-							<p class="group inner list-group-item-text">
-								Product	description... Lorem ipsum dolor sit amet, consectetuer
-								adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-								laoreet dolore magna aliquam erat volutpat.
-							</p>
+							<h4 class="group inner list-group-item-heading" th:text="${product.productName}">ProductName</h4>
+							<p class="group inner list-group-item-text" th:text="${product.description}">PrductDescription</p>
 							<div class="row">
 								<div class="col-xs-12 col-md-6">
-									<p class="lead">$21.000</p>
+									<p class="lead" th:inline="text">[[${product.price}]]zł</p>
 								</div>
 								<div class="">
 									<div class="row">
 										<div sec:authorize="isAuthenticated()" class="col-xs-12 col-md-6">
-											<a class="btn btn-success" th:href="@{|/product/${product.id}/addToCart|}" >Add to cart</a>
+											<a class="btn btn-success" th:href="@{|/product/${product.id}/addToCart|}" >Dodaj do koszyka</a>
 										</div>
 										<div class="col-xs-12 col-md-6">
-											<a class="btn btn-success" th:href="@{|/product/${product.id}|}">Product profile</a>
+											<a class="btn btn-success" th:href="@{|/product/${product.id}|}">Szczegóły</a>
 										</div>
 									</div>
 								</div>

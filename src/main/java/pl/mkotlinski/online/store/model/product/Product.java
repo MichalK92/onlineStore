@@ -9,8 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PRODUCT")
-public class Product
-{
+public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
@@ -19,29 +18,46 @@ public class Product
 	@Column(name = "PRODUCT_NAME")
 	private String productName;
 
-	public long getId()
-	{
+	@Column(name = "PRODUCT_DESCRIPTION")
+	private String description;
+
+	@Column(name = "PRODUCT_PRICE")
+	private Float price;
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(long id)
-	{
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public String getProductName()
-	{
+	public String getProductName() {
 		return productName;
 	}
 
-	public void setProductName(String productName)
-	{
+	public void setProductName(String productName) {
 		this.productName = productName;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "Product [id=" + id + ", productName=" + productName + "]";
 	}
 

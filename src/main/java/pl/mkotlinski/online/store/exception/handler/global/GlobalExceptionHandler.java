@@ -51,7 +51,7 @@ public class GlobalExceptionHandler
 	public ModelAndView handlerUserNotLogged(HttpServletRequest request, Exception ex)
 	{
 		ModelAndView mnv = new ModelAndView();
-		logger.error("User Not Logged Exception :", ex);
+	//	logger.error("User Not Logged Exception :", ex);
 		mnv.setViewName("index");
 		return mnv;
 	}
