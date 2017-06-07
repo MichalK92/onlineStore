@@ -49,6 +49,18 @@ public class Cart
 	{
 		this.productList = productList;
 	}
+	
+	public Float getTotalPrice()
+	{
+		Float price = 0.0f;
+		
+		for(Product p : getProductList())
+		{
+			price += p.getPrice();
+		}
+		
+		return price;
+	}
 
 	@Override
 	public String toString()

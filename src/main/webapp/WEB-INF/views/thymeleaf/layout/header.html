@@ -25,7 +25,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu Logowania<span class="caret"></span></a>						
 						<ul sec:authorize="isAuthenticated()" class="dropdown-menu">
 							<li><a href="#" th:href="@{/}">Strona Główna</a></li>
-							<li><a href="#" th:href="@{/}">Koszyk</a></li>
+							<li><a href="#" th:href="@{/cart}" th:inline="text">Koszyk ([[${#lists.size(koszyk.productList)}]])</a></li>
 							<li><a href="#" th:href="@{/}">Moje zaówienia</a></li>
 							<li><a href="#" th:href="@{/logout}" th:inline="text">Wyloguj([[${#authentication.getPrincipal().getUsername()}]])</a></li>
 						</ul>

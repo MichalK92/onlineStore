@@ -11,12 +11,23 @@
 	th:href="@{/resources/css/productList.css}" media="screen">
 <meta charset="utf-8" />
 <script type="text/javascript" th:src="@{/resources/js/productList.js}"></script>
+	
+<script type="text/javascript">
+		$(function() {
+			$(".btnmodal").on('click', function() {
+				/* $('div[id="id_product"]').val($(this).data('product_id')); */
+				/* alert($(this).data('product_name'));  */
+				document.getElementById("product_name").innerHTML = $(this).data('product_name');
+				document.getElementById("product_description").innerHTML = $(this).data('product_description');
+				document.getElementById("product_price").innerHTML = $(this).data('product_price');
+				$('#myModal').modal('show');
+			});
+		});
+</script>
 </head>
 <body>
 	<div layout:fragment="content">
 		<div class="container">
-			<p th:text="${testKoszyk}">TestKoszyk</p>
-		
 			<div class="well well-sm">
 				<strong>Widok</strong>
 				<div class="btn-group">
@@ -30,7 +41,7 @@
 						<img class="group list-group-image"	src="http://placehold.it/400x250/000/fff" alt="" />
 						<div class="caption">
 							<h4 class="group inner list-group-item-heading" th:text="${product.productName}">ProductName</h4>
-							<p class="group inner list-group-item-text" th:text="${product.description}">PrductDescription</p>
+							<!-- <p class="group inner list-group-item-text" th:text="${product.description}">PrductDescription</p> -->
 							<div class="row">
 								<div class="col-xs-12 col-md-6">
 									<p class="lead" th:inline="text">[[${product.price}]]zł</p>
@@ -41,7 +52,8 @@
 											<a class="btn btn-success" th:href="@{|/product/${product.id}/addToCart|}" >Dodaj do koszyka</a>
 										</div>
 										<div class="col-xs-12 col-md-6">
-											<a class="btn btn-success" th:href="@{|/product/${product.id}|}">Szczegóły</a>
+											<a class="btnmodal btn btn-success" data-toggle="dropdown" 
+											th:attr="data-product_id=${product.id},data-product_name=${product.productName},data-product_price=${product.price},data-product_description=${product.description}">Szczegóły</a>
 										</div>
 									</div>
 								</div>
@@ -51,6 +63,37 @@
 				</div>
 			</div>
 		</div>
-	</div>
+		<!-- MODAL -->
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel">Dane szczegółowe</h4>
+							</div>
+							<div class="modal-body">
+								<div id="orderItems" class="modal-body">
+									<img class="group list-group-image"	src="http://placehold.it/400x250/000/fff" alt="" />	
+									<div class="row">
+										<div class="col-xs-12"></div>
+										<div>Nazwa produktu:<p id="product_name"></p></div>
+										<div>Opis produktu:<p id="product_description"></p></div>
+										<div>Cena:<p id="product_price"></p></div>
+										<div class="col-xs-12"></div>
+									</div>
+								</div>
+							</div>		
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
 </body>
 </html>

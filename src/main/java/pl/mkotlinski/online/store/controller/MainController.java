@@ -67,7 +67,7 @@ public class MainController
 		}
 		binder.setValidator(userFormValidator);
 	}
-	@ModelAttribute("testKoszyk")
+	@ModelAttribute("koszyk")
 	public Cart sessionShopCart() throws UserNotLoggedException
 	{
 		if (systemUtils.isUserLogged())
@@ -141,6 +141,13 @@ public class MainController
 		}
 		userService.addUser(userAccountForm.getUser());
 		mnv.setViewName("index");
+		return mnv;
+	}
+	
+	@RequestMapping(value = "/cart")
+	public ModelAndView getUserCart()
+	{
+		ModelAndView mnv = new ModelAndView("cart/cart");
 		return mnv;
 	}
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorate="~{layout/layout}">
+<head>
+<title>Koszyk</title>
+<link rel="stylesheet" type="text/css" media="screen">
+<meta charset="utf-8" />
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container">
+			<h1>Shopping Cart</h1>
+			<hr>
+			<table class="table table-striped table-hover table-bordered">
+				<tbody>
+					<tr>
+						<th>Przedmiot</th>
+						<th>Cena</th>
+
+					</tr>
+					<tr th:each="product : ${koszyk.productList}">
+						<td th:text="${product.productName}">ProductName</td>
+						<td th:inline="text">[[${product.price}]]zł</td>
+					</tr>
+					<tr>
+						<th><span class="pull-right">Łącznie</span></th>
+						<th th:inline="text">[[${koszyk.getTotalPrice()}]]zł</th>
+					</tr>
+					<tr>
+						<td><a href="#" th:href="@{/}" class="btn btn-primary">Wróć
+								do sklepu</a></td>
+						<td colspan="3"><a href="#"
+							class="pull-right btn btn-success">Zamów</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
