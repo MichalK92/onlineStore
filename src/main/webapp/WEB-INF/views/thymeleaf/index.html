@@ -20,6 +20,7 @@
 				document.getElementById("product_name").innerHTML = $(this).data('product_name');
 				document.getElementById("product_description").innerHTML = $(this).data('product_description');
 				document.getElementById("product_price").innerHTML = $(this).data('product_price');
+				$('#modalAHref').attr('href', '/OnlineStoreWebApp/product/'+ $(this).data('product_id') +'/addToCart');
 				$('#myModal').modal('show');
 			});
 		});
@@ -79,14 +80,18 @@
 							</div>
 							<div class="modal-body">
 								<div id="orderItems" class="modal-body">
-									<img class="group list-group-image"	src="http://placehold.it/400x250/000/fff" alt="" />	
-									<div class="row">
-										<div class="col-xs-12"></div>
-										<div>Nazwa produktu:<p id="product_name"></p></div>
-										<div>Opis produktu:<p id="product_description"></p></div>
-										<div>Cena:<p id="product_price"></p></div>
-										<div class="col-xs-12"></div>
+								<div class="row">
+									<div class="col-xs-12">
+										<img class=""	src="http://placehold.it/400x250/000/fff" alt="" />	
 									</div>
+										<div class="col-xs-6" style="margin-top: 10px">
+											<div>Nazwa produktu:<p id="product_name"></p></div>
+											<div>Opis produktu:<p id="product_description"></p></div>
+											<div>Cena:<p id="product_price"></p></div>
+										</div>
+										<div sec:authorize="isAuthenticated()" class="col-xs-6" style="margin-top: 10px">
+											<a id="modalAHref"class="btn btn-success">Dodaj do koszyka</a>
+										</div>
 								</div>
 							</div>		
 						</div>
@@ -94,6 +99,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- MODAL [END]  -->
 	</div>	
 </body>
 </html>
